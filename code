@@ -1,0 +1,35 @@
+import streamlit as st
+from deep_translator import GoogleTranslator
+
+st.set_page_config(page_title="Language Translator", page_icon="🌍")
+
+st.title("🌍 AI Language Translation Tool")
+st.write("Translate text between multiple languages.")
+
+languages = {
+    "English": "en",
+    "Hindi": "hi",
+    "Telugu": "te",
+    "Tamil": "ta",
+    "French": "fr",
+    "Spanish": "es",
+    "German": "de",
+    "Chinese": "zh-CN"
+}
+
+source = st.selectbox("Source Language", list(languages.keys()))
+target = st.selectbox("Target Language", list(languages.keys()))
+
+text = st.text_area("Enter Text")
+
+if st.button("Translate"):
+    if text:
+        translated = GoogleTranslator(
+            source=languages[source],
+            target=languages[target]
+        ).translate(text)
+
+        st.success("Translation Complete!")
+        st.text_area("Translated Text", translated, height=150)
+    else:
+        st.warning("Please enter some text.")
